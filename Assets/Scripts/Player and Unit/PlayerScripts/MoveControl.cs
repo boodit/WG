@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +6,7 @@ public class MoveControl : MonoBehaviour, IConrolable
     [SerializeField] private float _runSpeed = 3;
     [SerializeField] private float _speed = 1;
     [SerializeField] private float _gravity = 9.8f;
+    
 
     
     private PlayerInput _inputPlayer;
@@ -18,9 +15,11 @@ public class MoveControl : MonoBehaviour, IConrolable
     private Vector3 _currentMovement;
     private Vector3 _currentRunMovement;
     private float _rotationFactorPerFrame = 10f;
+    private Camera _mCam;
     
     private bool isMovementPressed;
     private bool isRunPressed;
+    
 
     public bool IsMovePress => isMovementPressed;
     public bool IsRunPress => isRunPressed;
@@ -28,6 +27,7 @@ public class MoveControl : MonoBehaviour, IConrolable
 
     private void Awake()
     {
+        _mCam = Camera.main;
         _gravity = -_gravity;
         _inputPlayer = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
@@ -54,7 +54,8 @@ public class MoveControl : MonoBehaviour, IConrolable
 
     private void Update()
     {
-        HandleRotation();
+        //HandleRotation();
+        MouseRotation();
         Move();
         HandleGravity();
     }
@@ -100,6 +101,18 @@ public class MoveControl : MonoBehaviour, IConrolable
         }
         
     }
+
+    private void MouseRotation()
+    {
+        Ray mouseRay = _mCam.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(mouseRay, out RaycastHit mousePos);
+        Vector3 positionToLookAt = mousePos.point - transform.position;
+        positionToLookAt.y = 0f;
+        transform.forward = positionToLookAt;
+
+
+    }
+
     private void HandleGravity()
     {
         if (!_characterController.isGrounded)
