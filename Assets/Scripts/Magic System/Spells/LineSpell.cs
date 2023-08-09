@@ -6,7 +6,7 @@ public class LineSpell : Spell
     [SerializeField] private AtributeSpell _atribute;
     
     [Header("Common")]
-    [SerializeField, Min(0f)] private float _damagePerSecond;
+    private int _damagePerSecond;
     [SerializeField] private bool _gizmosDraw = false;
 
     [Header("Mask")] 
@@ -78,6 +78,11 @@ public class LineSpell : Spell
     {
         for (int i = 0; i < _overlapCountResult; i++)
         {
+            if (_overlapResult[i].CompareTag("Player"))
+            {
+                continue;
+            }
+
             if (_overlapResult[i].TryGetComponent(out IDamageable damageable) == false)
             {
                 continue;

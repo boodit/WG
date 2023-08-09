@@ -11,6 +11,6 @@ public class AtributeSpell : ScriptableObject
 
     [Header("Ability")] 
     public float Cooldown;
-    public float Damage;
+    [Min(0f)]public int Damage;
     
 }

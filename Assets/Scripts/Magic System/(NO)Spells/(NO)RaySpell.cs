@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NORaySpell 
 {
-    public float damagePerSecond = 2f;
+    public int damagePerSecond = 2;
     public float beamRange = 10f;
     public float cooldownDuration = 0.1f; // Длительность перезарядки в секундах
     private bool isOnCooldown = false; // Флаг перезарядки

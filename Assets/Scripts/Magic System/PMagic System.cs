@@ -12,7 +12,7 @@ public class PMagicSystem : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _playerInput.CastSystem.FirstSpell.performed += _ => CastSpell(0); // Проблема в самом скиле
+        _playerInput.CastSystem.FirstSpell.performed += _ => CastSpell(0);
         _playerInput.CastSystem.SecondSpell.performed += _ => CastSpell(1);
         _playerInput.CastSystem.UltimateSpell.performed += _ => CastSpell(2);
         _playerInput.CastSystem.PrimarySpell.performed += _ => CastSpell(3);
@@ -36,7 +36,15 @@ public class PMagicSystem : MonoBehaviour
 
     private void CastSpell(int numSpell)
     {
-        _spells[numSpell].Cast();
+        if (_spells[numSpell] == null)
+        {
+            Debug.Log("Тут пока ничего");
+        }
+        else
+        { 
+            _spells[numSpell].Cast(); 
+        }
+        
     }
 
 
